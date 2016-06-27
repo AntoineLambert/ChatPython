@@ -5,3 +5,30 @@ header {
 #user {
  	width: 30%;
 }
+body {
+	background-color: black;
+}
+#message {
+	position: absolute;
+	display: flex;
+	background-color: red;
+	height: 10%;
+	width: 100%;
+	top: 65%;
+}
+#historique {
+	position: absolute;
+	display: flex;
+	background-color: blue;
+	height: 50%;
+	width: 70%;
+	top: 15%;
+}
+#infos {
+	position: absolute;
+	display: flex;
+	background-color: yellow;
+	height: 25%;
+	width: 100%;
+	bottom: 0;
+}
