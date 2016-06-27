@@ -3,6 +3,7 @@
 import rethinkdb as r
 from flask import Flask, render_template
 from flask_socketio import SocketIO
+from threading import Thread
 #initialise le serveur sockio avec Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -13,13 +14,11 @@ r.db_create('chatDB').run()
 r.db("chatDB").table_create("name").run()
 r.db("chatDB").table_create("message").run()
 r.db("chatDB").table_create("time").run()
-
+r.db("chatDB").table_create("password").run()
+r.db("chatDB").table_create("email").run()
 
 print('Hello World !')
 
 
 if __name__ == '__main__':
     socketio.run(app)
-
-#test commit
-#test modif
