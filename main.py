@@ -8,7 +8,11 @@ from threading import Thread
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+<<<<<<< HEAD
 #se connecter à RethinkDB
+=======
+#se connecte à la Table sur RethinkDB
+>>>>>>> c6c1ebd43d4c8f4e51a525955c3ae4595b599343
 r.connect( "localhost", 28015).repl()
 
 
