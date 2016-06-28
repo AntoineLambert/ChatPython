@@ -10,7 +10,6 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 #se connecter à RethinkDB
-
 r.connect( "localhost", 28015).repl()
 
 
