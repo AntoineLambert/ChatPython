@@ -15,7 +15,8 @@ app.config.update(dict(DEBUG=True,
                        RDB_HOST='localhost',
                        RDB_PORT=28015,
                        DB_NAME='chatDB',
-                       TABLE_NAME='messages'))
+                       TABLE_NAME='messages',
+                       TABLE_ACCOUNT='account'))
 
 # open connection before each request
 @app.before_request
@@ -36,14 +37,46 @@ def teardown_request(exeption):
 def my_form():
 	return flask.render_template("index.html")
 
-@app.route('/', methods=['POST'])
-def my_form_post():
-	text = request.form['text']
-	print text
-	rdb.db(app.config['DB_NAME']).table(app.config['TABLE_NAME']).insert({'text': text}).run(g.conn)
-	return my_form()
+@app.route('/', methods=['GET', 'POST'])
+def main():
+	if request.method == 'POST':
+		if request.form['submit'] == 'SignUp':
+			print('Signup')
+			def inscription():
+				name = request.form['name']
+				password = request.form['password']
+				email = request.form['email']
+				if request.method == 'POST':
+					rdb.db(app.config['DB_NAME']).table(app.config['TABLE_ACCOUNT']).insert({'name': name, 'password': password, 'email': email}).run(g.conn)
+			return my_form()
+		elif request.form['submit'] == 'SignIn':
+			print('Signin')
+			def my_form_post():
+				print('WIN!')
+				error = None
+				name = request.form['name']
+				password = request.form['password']
+				email = request.form['email']
+				if request.method == 'POST':
+					rdb.db(app.config['DB_NAME']).table(app.config['TABLE_ACCOUNT']).filter({'name': name, 'password': password}).run(g.conn)
+					
+					if name != 'name' or password != 'password':
+						error = "Mauvais Mot de Passe !"
+					else:
+						print('Réussi !')
+			return my_form()
 
-print('🐱')
+		elif request.form['submit'] == 'Send':
+			print('Send')
+			def my_form_post():
+				if request.method == 'POST':
+					text = request.form['text']
+					print text
+					rdb.db(app.config['DB_NAME']).table(app.config['TABLE_NAME']).insert({'text': text}).run(g.conn)
+			return my_form()
+
+
+	print('🐱')
 
 if __name__ == '__main__':
     app.run()
